@@ -1,24 +1,39 @@
-import logo from './logo.svg';
 import './App.css';
+import Navbar from './components/layouts/Navbar';
+import { BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import About from './components/pages/About';
+import Homepage from './components/pages/Homepage';
+import UserState from './components/context/UserState';
+import TodoState from './components/context/Todo/TodoState';
+import AlertState from './components/context/Alert/AlertState';
 
-function App() {
+import Alert from './components/pages/Alert';
+import NotFound from './components/pages/NotFound';
+import Todo from './components/todo/Todo';
+
+import User from './components/User/User';
+
+const App =  () => {
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <TodoState>
+    <UserState>
+      <AlertState>
+        <Router>
+          <Navbar />
+          <Alert />
+            <Switch>
+              <Route exact path='/' component= { Homepage } />
+              <Route exact path='/About' component={About} />
+              <Route exact path='/user/:sid' component={User} />
+              <Route exact path='/todo' component={Todo} />
+              <Route component={NotFound} />
+            </Switch>
+          </Router>
+        </AlertState>
+    </UserState>
+    </TodoState>
+    
   );
 }
 
